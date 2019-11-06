@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.entity.AdminMapper" >
+    <resultMap type="com.model.Admin" id="BaseResultMap">
+
+    <id jdbcType="INTEGER" property="adminId" column="admin_id"/>
+
+    <result jdbcType="VARCHAR" property="adminUsername" column="admin_username"/>
+
+    <result jdbcType="VARCHAR" property="adminPassword" column="admin_password"/>
+
+    <result jdbcType="VARCHAR" property="adminName" column="admin_name"/>
+
+</resultMap>
+
+</mapper>

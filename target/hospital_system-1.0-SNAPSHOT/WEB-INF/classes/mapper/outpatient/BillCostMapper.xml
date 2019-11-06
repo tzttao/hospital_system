@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.outpatient.BillCostMapper" >
+    <resultMap type="com.model.BillCost" id="BaseResultMap">
+
+    <id jdbcType="INTEGER" property="billCostId" column="bill_cost_id"/>
+
+    <result jdbcType="INTEGER" property="rId" column="r_id"/>
+
+    <result jdbcType="INTEGER" property="inrcdId" column="inrcd_id"/>
+
+    <result jdbcType="INTEGER" property="rgstrId" column="rgstr_id"/>
+
+</resultMap>
+</mapper>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.inpatient.InpatientExamineMapper">
+    <insert id="addInpatientExamine" parameterType="com.model.InpatientExamine">
+		insert into
+		inpatient_examine(examine_item,examine_price)
+		values(#{examineItem},#{examinePrice})
+	</insert>
+
+    <update id="updateInpatientExamine" parameterType="com.model.InpatientExamine">
+        update inpatient_examine
+        <trim prefix="set" suffixOverrides="," suffix="where examine_id=#{examineId}">
+            <if test="examineItem != null" >examine_item = #{examineItem}, </if>
+            <if test="examinePrice !=null">examine_price=#{examinePrice}</if>
+        </trim>
+    </update>
+
+    <delete id="deleteInpatientExamine" parameterType="com.model.InpatientExamine">
+        delete from inpatient_examine where examine_id=#{examineId}
+    </delete>
+
+    <resultMap type="com.model.InpatientExamine" id="BaseResultMap">
+        <id jdbcType="INTEGER" property="examineId" column="examine_id"/>
+        <result jdbcType="VARCHAR" property="examineItem" column="examine_item"/>
+        <result jdbcType="DOUBLE" property="examinePrice" column="examine_price"/>
+    </resultMap>
+    <select id="selectInpatientExamine" resultMap="BaseResultMap">
+        select * from inpatient_examine
+    </select>
+</mapper>
