@@ -15,7 +15,7 @@ public class Register implements Serializable {
 
     private Integer doctorId;
 
-    private Integer registarId;
+    private Integer registrarId;
 
     private Double registerFee;//挂号费用
 
@@ -65,12 +65,12 @@ public class Register implements Serializable {
         this.doctorId = doctorId;
     }
 
-    public Integer getRegistarId() {
-        return registarId;
+    public Integer getRegistrarId() {
+        return registrarId;
     }
 
-    public void setRegistarId(Integer registarId) {
-        this.registarId = registarId;
+    public void setRegistrarId(Integer registrarId) {
+        this.registrarId = registrarId;
     }
 
     public Double getRegisterFee() {
