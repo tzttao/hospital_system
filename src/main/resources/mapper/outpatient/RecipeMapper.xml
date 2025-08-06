@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.outpatient.RecipeMapper" >
+    <resultMap id="medicineMap" type="com.model.Medicine">
+        <!--主键字段的对应-->
+        <id property="medicineId" column="medicine_id"></id>
+        <!--非主键字段的对应   实体类属性名        数据库类名-->
+        <result property="medicineName" column="medicine_name"></result>
+        <result property="medicineManufacturer" column="medicine_manufacturer"></result>
+        <result property="medicinePrice" column="medicine_price"></result>
+        <result property="medicineAmount" column="medicine_amount"></result>
+    </resultMap>
+    <resultMap id="recipeMap" type="com.model.Recipe">
+        <!--主键字段的对应-->
+        <id property="recipeId" column="recipe_id"></id>
+        <!--非主键字段的对应   实体类属性名        数据库列名-->
+        <result property="pId" column="p_id"></result>
+        <result property="dId" column="d_id"></result>
+        <result property="recipeDate" column="recipe_date"></result>
+        <result property="recipeDescription" column="recipe_description"></result>
+        <result property="mId" column="m_id"></result>
+        <result property="recipeMusage" column="recipe_musage"></result>
+        <result property="recipeMamount" column="recipe_mamount"></result>
+        <result property="recipeMfee" column="recipe_mfee"></result>
+        <result property="recipeEfee" column="recipe_efee"></result>
+        <result property="recipeSumfee" column="recipe_sumfee"></result>
+        <result property="doctorId" column="doctor_id"></result>
+        <result property="dispenserId" column="dispenser_id"></result>
+    </resultMap>
+    <!--获取所有药品-->
+    <select id="findAllMedicine" resultMap="medicineMap">
+        SELECT * FROM medicine
+    </select>
+    <!--根据药品名称模糊查询-->
+    <select id="findMedicineByName" parameterType="string" resultMap="medicineMap">
+        select * from medicine where medicine_name like #{medicineName}
+
+    </select>
+    <!--根据id获取药品信息-->
+    <select id="findMedicineById" resultMap="medicineMap" parameterType="INT">
+        SELECT * FROM medicine where medicine_id=#{id}
+    </select>
+    <!--删除病例-->
+    <delete id="deleteByPrimaryKey" parameterType="com.model.Recipe">
+        delete from recipe where recipe_id=#{recipeId}
+    </delete>
+    <!--添加病例-->
+    <!--<insert id="saveRecipe" parameterMap="recipeMap">-->
+        <!--insert into recipe (pId,dId,recipeDate,recipeDescription,mId,recipeMusage,recipeMamount,recipeMfee,recipeEfee,recipeSumfee,doctorId,dispenserId)-->
+        <!--values-->
+        <!--(#{pId},#{dId},#{recipeDate},#{recipeDescription},#{mId},#{recipeMusage},#{recipeMamount},#{recipeMfee},#{recipeEfee},#{recipeSumfee},#{doctorId},#{dispenserId})-->
+    <!--</insert>-->
+    <!--添加病例-->
+    <insert id="saveRecipe" parameterType="com.model.Recipe">
+        insert into recipe (p_id,d_id,recipe_date,recipe_description,m_id,recipe_musage,recipe_mamount,recipe_mfee,recipe_efee,recipe_sumfee,doctor_id,dispenser_id)
+        values
+        (#{pId},#{dId},#{recipeDate},#{recipeDescription},#{mId},#{recipeMusage},#{recipeMamount},#{recipeMfee},#{recipeEfee},#{recipeSumfee},#{doctorId},#{dispenserId})
+    </insert>
+    <!--更新病例-->
+    <update id="updateRecipe" parameterType="com.model.Recipe">
+
+        UPDATE recipe
+        <set>
+            <if test="pId!=null">p_id=#{pId},</if>
+            <if test="dId!=null">d_id=#{dId},</if>
+            <if test="recipeDate!=null">recipe_date=#{recipeDate},</if>
+            <if test="recipeDescription!=null">recipe_description=#{recipeDescription},</if>
+            <if test="mId!=null">m_id=#{mId},</if>
+            <if test="recipeMusage!=null"> recipe_musage=#{recipeMusage},</if>
+            <if test="recipeMamount!=null">recipe_mamount=#{recipeMamount},</if>
+            <if test="recipeMfee!=null"> recipe_mfee=#{recipeMfee},</if>
+            <if test="recipeEfee!=null">recipe_efee=#{recipeEfee}</if>
+            <if test="recipeSumfee!=null">recipe_sumfee=#{recipeSumfee}</if>
+            <if test="doctorId!=null">doctor_id=#{doctorId}</if>
+            <if test="dispenserId!=null">dispenser_id=#{dispenserId}</if>
+        </set>
+        WHERE recipe_id=#{recipeId}
+    </update>
+
+
+</mapper>

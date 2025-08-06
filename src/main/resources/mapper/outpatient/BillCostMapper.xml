@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.outpatient.BillCostMapper" >
+    <resultMap type="com.model.BillCost" id="billCostMap">
+
+    <id property="billCostId" column="bill_cost_id"/>
+
+    <result property="rId" column="r_id"/>
+
+    <result property="inrcdId" column="inrcd_id"/>
+
+    <result property="rgstrId" column="rgstr_id"/>
+
+    <result property="bcAmount" column="bc_amount"></result>
+</resultMap>
+    <!--插入数据-->
+    <insert id="saveBillCost" parameterType="com.model.BillCost">
+      insert into bill_cost (r_id,inrcd_id,rgstr_id,bc_amount) values(#{rId},#{inrcdId},#{rgstrId},#{bcAmount});
+    </insert>
+    <!--查询数据-->
+    <select id="selectBillCostById" parameterType="com.model.BillCost" resultMap="billCostMap">
+SELECT
+    bill_cost.bill_cost_id
+    , register.register_fee
+    , register_online.online_fee
+    , recipe.recipe_sumfee
+    , inpatient_record.inrecord_amount,
+    SUM(register.register_fee
+    + register_online.online_fee
+    + recipe.recipe_sumfee
+    + inpatient_record.inrecord_amount)AS bc_amount
+FROM
+    hospital_system.bill_cost
+    INNER JOIN hospital_system.register
+        ON (bill_cost.rgstr_id = register.register_id)
+    INNER JOIN hospital_system.register_online
+        ON (bill_cost.onrgstr_id = register_online.online_id)
+    INNER JOIN hospital_system.recipe
+        ON (bill_cost.r_id = recipe.recipe_id)
+    INNER JOIN hospital_system.inpatient_record
+        ON (inpatient_record.r_id = recipe.recipe_id) AND (bill_cost.inrcd_id = inpatient_record.inrecord_id)
+        WHERE bill_cost.bill_cost_id=#{billCostId}
+    </select>
+    <!--更新数据-->
+    <update id="updateBillCostByID" parameterType="com.model.BillCost">
+update bill_cost set bc_amount=#{bcAmount}where bill_cost_id=#{billCostId}
+    </update>
+    <!--删除数据-->
+    <delete id="deleteBillCostByID" parameterType="com.model.BillCost">
+        delete from bill_cost where bill_cost_id=#{billCostId}
+    </delete>
+</mapper>

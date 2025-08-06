@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.inpatient.InpatientWardMapper">
+    <insert id="addInpatientWard" parameterType="com.model.InpatientWard">
+        insert into inpatient_ward (d_id,inward_amount,inward_surplus_amount,inward_price)values(#{dId},#{inwardAmount},#{inwardSurplusAmount},#{inwardPrice})
+   </insert>
+
+    <delete id="deleteInpatientWard" parameterType="com.model.InpatientWard">
+        delete from inpatient_ward where inward_id=#{inwardId}
+    </delete>
+
+    <update id="updateInpatientWard" parameterType="com.model.InpatientWard">
+        update inpatient_ward
+        <trim prefix="set" suffixOverrides="," suffix="where inward_id=#{inwardId}">
+            <if test="dId != null">
+                d_id = #{dId},
+            </if>
+            <if test="inwardAmount != null">
+                inward_amount = #{inwardAmount},
+            </if>
+            <if test="inwardSurplusAmount != null">
+                inward_surplus_amount = #{inwardSurplusAmount},
+            </if>
+            <if test="inwardPrice != null">
+                inward_price = #{inwardPrice},
+            </if>
+        </trim>
+    </update>
+
+    <resultMap type="com.model.InpatientWard" id="BaseResultMap">
+        <id jdbcType="INTEGER" property="inwardId" column="inward_id"/>
+        <result jdbcType="INTEGER" property="dId" column="d_id"/>
+        <result jdbcType="INTEGER" property="inwardAmount" column="inward_amount"/>
+        <result jdbcType="INTEGER" property="inwardSurplusAmount" column="inward_surplus_amount"/>
+        <result jdbcType="DOUBLE" property="inwardPrice" column="inward_price"/>
+    </resultMap>
+    <select id="selectInpatientWard" resultMap="BaseResultMap">
+        select * from inpatient_ward
+    </select>
+
+    <select id="selectInpatientWardBySurplus" resultMap="BaseResultMap">
+        select * from inpatient_ward where inward_surplus_amount > 0
+    </select>
+</mapper>
