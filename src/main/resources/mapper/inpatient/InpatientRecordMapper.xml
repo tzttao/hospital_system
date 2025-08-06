@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.inpatient.InpatientRecordMapper">
+
+    <insert id="addInpatientRecord" parameterType="com.model.InpatientRecord">
+		insert into
+		inpatient_record(p_id,inrecord_in_date,d_id,inwd_id,s_id,inem_id,r_id,inrecord_out_date)
+		values(#{pId},#{inrecordInDate},#{dId},#{inwdId},#{sId},#{inemId},#{rId},#{inrecordOutDate})
+	</insert>
+
+    <update id="updateInpatientRecord" parameterType="com.model.InpatientRecord">
+        update inpatient_record
+        <trim prefix="set" suffixOverrides="," suffix="where inrecord_id=#{inrecordId}">
+            <if test="pId != null">p_id = #{pId,jdbcType=INTEGER},</if>
+            <if test="inrecordInDate != null">inrecord_in_date = #{inrecordInDate,jdbcType=TIMESTAMP},</if>
+            <if test="dId != null">d_id = #{dId,jdbcType=INTEGER},</if>
+            <if test="inwdId != null">inwd_id = #{inwdId,jdbcType=INTEGER},</if>
+            <if test="sId != null">s_id = #{sId,jdbcType=INTEGER},</if>
+            <if test="inemId != null">inem_id = #{inemId,jdbcType=INTEGER},</if>
+            <if test="rId != null">r_id = #{rId,jdbcType=INTEGER},</if>
+            <if test="inrecordOutDate != null">inrecord_out_date = #{inrecordOutDate,jdbcType=TIMESTAMP},</if>
+        </trim>
+    </update>
+
+    <delete id="deleteInpatientRecord" parameterType="com.model.InpatientRecord">
+		delete from inpatient_record where p_id=#{pId}
+	</delete>
+
+    <!--创建映射-->
+    <resultMap type="com.model.InpatientRecord" id="BaseResultMap">
+        <id jdbcType="INTEGER" property="inrecordId" column="inrecord_id"/>
+        <result jdbcType="INTEGER" property="pId" column="p_id"/>
+        <result jdbcType="TIMESTAMP" property="inrecordInDate" column="inrecord_in_date"/>
+        <result jdbcType="INTEGER" property="dId" column="d_id"/>
+        <result jdbcType="INTEGER" property="inwdId" column="inwd_id"/>
+        <result jdbcType="INTEGER" property="sId" column="s_id"/>
+        <result jdbcType="INTEGER" property="inemId" column="inem_id"/>
+        <result jdbcType="INTEGER" property="rId" column="r_id"/>
+        <result jdbcType="TIMESTAMP" property="inrecordOutDate" column="inrecord_out_date"/>
+    </resultMap>
+
+    <select id="selectInpatientRecord" resultMap="BaseResultMap">
+		select * from inpatient_record
+	</select>
+
+    <select id="selectInpatientRecordByRecordId" resultMap="BaseResultMap">
+		select * from inpatient_record where p_id=#{pId}
+	</select>
+
+
+</mapper>
