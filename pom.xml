@@ -21,7 +21,7 @@
         <mybatis.version>3.5.10</mybatis.version>
         <mybatis.spring.version>2.0.7</mybatis.spring.version>
         <mysql.version>8.0.29</mysql.version>
-        <c3p0.version>0.9.5.5</c3p0.version>
+        <c3p0.version>0.12.0</c3p0.version>
         <junit.version>4.13.2</junit.version>
         <log4j.version>1.2.17</log4j.version>
         <javax.servlet.version>4.0.1</javax.servlet.version>
